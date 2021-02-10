@@ -5,6 +5,7 @@
   "author": "Romulo Assis <romuloassis.as@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "husky install",
     "test": "jest --passWithNoTests",
     "test:watch": "yarn test -- --watch",
     "test:staged": "yarn test -- --findRelatedTests",
