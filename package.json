@@ -26,5 +26,17 @@
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.1",
     "typescript": "^4.1.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+    "pre-push": "yarn test:ci"
+    }
+  },
+  "lint-staged": {
+    "**/*.{ts,graphql,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
