@@ -4,6 +4,19 @@
   "main": "index.js",
   "author": "Romulo Assis <romuloassis.as@gmail.com>",
   "license": "MIT",
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test:ci"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint 'src/**' --fix",
+      "npm run test:staged"
+    ]
+  },
   "scripts": {
     "postinstall": "husky install",
     "test": "jest --passWithNoTests",
@@ -29,18 +42,5 @@
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.1",
     "typescript": "^4.1.4"
-  },
-  "private": true,
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test:ci"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint 'src/**' --fix",
-      "npm run test:staged"
-    ]
   }
 }
