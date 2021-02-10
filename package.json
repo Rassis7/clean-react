@@ -34,9 +34,9 @@
     }
   },
   "lint-staged": {
-    "**/*.{ts,graphql,json,md}": [
-      "prettier --write",
-      "git add"
+    "*.{ts,tsx}": [
+      "eslint 'src/**' --fix",
+      "npm run test:staged"
     ]
   }
 }
