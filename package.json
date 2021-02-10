@@ -5,7 +5,10 @@
   "author": "Romulo Assis <romuloassis.as@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest --passWithNoTest",
+    "test:watch": "yarn test -- --watch",
+    "test:staged": "yarn test -- --findRelatedTests",
+    "test:ci": "yarn test -- --coverage"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
