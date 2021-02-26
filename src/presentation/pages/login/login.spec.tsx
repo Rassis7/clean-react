@@ -1,8 +1,9 @@
 import React from 'react'
 import faker from 'faker'
-import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react'
-import { ValidationStub, AuthenticationSpy } from '@/presentation/test'
 import Login from './login'
+import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react'
+import { ValidationStub, AuthenticationSpy } from '@/presentation/test'
+import { InvalidCredentialError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RenderResult
@@ -142,5 +143,22 @@ describe('Login Component', () => {
     populateEmailField(sut)
     fireEvent.submit(sut.getByTestId('form'))
     expect(authenticationSpy.callsCount).toBe(0)
+  })
+
+  test('Should present error if Authentication fails', async () => {
+    const { sut, authenticationSpy } = makeSut()
+    const error = new InvalidCredentialError()
+    // Devo mockar o retorno do authenticationSpy, por default ele trás o mockAccountModel, agora será um erro.
+    jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
+    simulateValidSubmit(sut)
+    const errorWrap = sut.getByTestId('error-wrap')
+    // vou passar um elemento do dom, onde ele espera ele renderizar novamente para poder seguir.
+    // O errorWrap virou um observer. O ideal é ser um elemento que sempre exista e que mude no DOM depois da execução da linha de cima
+    await waitFor(() => errorWrap)
+    const mainError = sut.getByTestId('main-error')
+    expect(mainError.textContent).toBe(error.message)
+    // Se eu testar o spinner diretamente, quando ele sumir, vai quebrar, por isso...
+    // Aqui ele só terá 1 filho, pq o spinner irá sumir.
+    expect(errorWrap.childElementCount).toBe(1)
   })
 })
