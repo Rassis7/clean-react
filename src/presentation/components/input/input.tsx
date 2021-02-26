@@ -13,8 +13,8 @@ const Input: React.FC<Props> = (props: Props) => {
   const handleChange = ({ target }: React.FocusEvent<HTMLInputElement>): void => {
     setState({ ...state, [target.name]: target.value })
   }
-  const getStatus = (): string => '🔴'
-  const getTitle = (): string => error;
+  const getStatus = (): string => error ? '🔴' : '🟢'
+  const getTitle = (): string => error || 'Tudo certo!';
 
   return (
     <div className={Styles.inputWrap}>
