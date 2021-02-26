@@ -39,6 +39,7 @@ describe('Login Component', () => {
   test('Should show email error if Validation fails', () => {
     const { sut, validationStub } = makeSut()
     const emailInput = sut.getByTestId('email')
+    // Simular a ação de preencher
     fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
     const emailStatus = sut.getByTestId('email-status')
     expect(emailStatus.title).toBe(validationStub.errorMessage)
@@ -48,6 +49,7 @@ describe('Login Component', () => {
   test('Should show password error if Validation fails', () => {
     const { sut, validationStub } = makeSut()
     const passwordInput = sut.getByTestId('password')
+    // Simular a ação de preencher
     fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
     const passwordStatus = sut.getByTestId('password-status')
     expect(passwordStatus.title).toBe(validationStub.errorMessage)
@@ -56,8 +58,10 @@ describe('Login Component', () => {
 
   test('Should show valid email if Validation fails succeeds', () => {
     const { sut, validationStub } = makeSut()
+    // Aqui fala que não existe nenhum erro
     validationStub.errorMessage = null
     const emailInput = sut.getByTestId('email')
+    // Simular a ação de preencher
     fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
     const emailStatus = sut.getByTestId('email-status')
     expect(emailStatus.title).toBe('Tudo certo!')
@@ -66,11 +70,27 @@ describe('Login Component', () => {
 
   test('Should show valid password if Validation fails succeeds', () => {
     const { sut, validationStub } = makeSut()
+    // Aqui fala que não existe nenhum erro
     validationStub.errorMessage = null
     const passwordInput = sut.getByTestId('password')
+    // Simular a ação de preencher
     fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
     const passwordStatus = sut.getByTestId('password-status')
     expect(passwordStatus.title).toBe('Tudo certo!')
     expect(passwordStatus.textContent).toBe('🟢')
+  })
+
+  test('Should enable submit button if form is valid', () => {
+    const { sut, validationStub } = makeSut()
+    // Aqui fala que não existe nenhum erro
+    validationStub.errorMessage = null
+    const emailInput = sut.getByTestId('email')
+    // Simular a ação de preencher
+    fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
+    const passwordInput = sut.getByTestId('password')
+    // Simular a ação de preencher
+    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+    expect(submitButton.disabled).toBe(false)
   })
 })
