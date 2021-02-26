@@ -1,17 +1,34 @@
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
+import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react'
 import Login from './login'
+import { Validation } from '@/presentation/protocols/validation'
 
 type SutTypes = {
   sut: RenderResult
+  validationSpy: ValidationSpy
+}
+
+class ValidationSpy implements Validation {
+  errorMessage: string
+  input: object
+  validate (input: object): string {
+    this.input = input
+    return this.errorMessage
+  }
 }
 
 const makeSut = (): SutTypes => {
-  const sut = render(<Login/>)
-  return { sut }
+  const validationSpy = new ValidationSpy()
+  const sut = render(<Login validation={validationSpy}/>)
+  return {
+    sut,
+    validationSpy
+  }
 }
 
 describe('Login Component', () => {
+  afterEach(cleanup)
+
   test('Should start with initial state', () => {
     const { sut } = makeSut()
     const errorWrap = sut.getByTestId('error-wrap')
@@ -27,5 +44,16 @@ describe('Login Component', () => {
     const passwordStatus = sut.getByTestId('password-status')
     expect(passwordStatus.title).toBe('Campo obrigatório')
     expect(passwordStatus.textContent).toBe('🔴')
+  })
+
+  test('Should call Validation with correct value', () => {
+    const { sut, validationSpy } = makeSut()
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput, { target: { value: 'any_email' } })
+    // Ao preencher o campo, já quero disparar o validation (validar em tempo real),
+    // com isso irei chamar o validationSpy
+    expect(validationSpy.input).toEqual({
+      email: 'any_email'
+    })
   })
 })
