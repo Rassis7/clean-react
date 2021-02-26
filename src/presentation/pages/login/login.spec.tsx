@@ -45,7 +45,6 @@ describe('Login Component', () => {
     expect(passwordStatus.title).toBe('Campo obrigatório')
     expect(passwordStatus.textContent).toBe('🔴')
   })
-
   test('Should call Validation with correct email', () => {
     const { sut, validationSpy } = makeSut()
     const emailInput = sut.getByTestId('email')
@@ -54,6 +53,16 @@ describe('Login Component', () => {
     // com isso irei chamar o validationSpy
     expect(validationSpy.input).toEqual({
       email: 'any_email'
+    })
+  })
+  test('Should call Validation with correct password', () => {
+    const { sut, validationSpy } = makeSut()
+    const passwordInput = sut.getByTestId('password')
+    fireEvent.input(passwordInput, { target: { value: 'any_password' } })
+    // Ao preencher o campo, já quero disparar o validation (validar em tempo real),
+    // com isso irei chamar o validationSpy
+    expect(validationSpy.input).toEqual({
+      email: 'any_password'
     })
   })
 })
