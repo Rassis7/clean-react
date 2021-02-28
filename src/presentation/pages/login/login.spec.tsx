@@ -17,7 +17,7 @@ type SutParams = {
   validationError: string
 }
 
-const history = createMemoryHistory()
+const history = createMemoryHistory({ initialEntries: ['/login'] })
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
@@ -176,6 +176,8 @@ describe('Login Component', () => {
     simulateValidSubmit(sut)
     await waitFor(() => sut.getByTestId('form'))
     expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
+    expect(history.length).toBe(1)
+    expect(history.location.pathname).toBe('/')
   })
 
   test('Should go to singup page', () => {
@@ -183,7 +185,7 @@ describe('Login Component', () => {
     const signup = sut.getByTestId('signup')
     fireEvent.click(signup)
     // Terá duas rotas na pilha:
-    // 1 => será a rota que estou que é: /
+    // 1 => será a rota que estou que é: /login (OBS: ele só é a primeira, pois eu defini isso no createMemoryHistory)
     // 2 => a rota que cliquei (no <Link ...>) que é: /signup
     expect(history.length).toBe(2)
     // Testo qual rota estou sendo redirecionado, que é /signup
