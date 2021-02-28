@@ -1,5 +1,7 @@
 import React from 'react'
 import faker from 'faker'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import 'jest-localstorage-mock'
 import Login from './login'
 import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react'
@@ -15,11 +17,16 @@ type SutParams = {
   validationError: string
 }
 
+const history = createMemoryHistory()
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
   validationStub.errorMessage = params?.validationError
-  const sut = render(<Login validation={validationStub} authentication={authenticationSpy}/>)
+  const sut = render(
+    <Router history={history}>
+      <Login validation={validationStub} authentication={authenticationSpy}/>
+    </Router>
+  )
   return {
     sut,
     authenticationSpy
@@ -169,5 +176,17 @@ describe('Login Component', () => {
     simulateValidSubmit(sut)
     await waitFor(() => sut.getByTestId('form'))
     expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
+  })
+
+  test('Should go to singup page', () => {
+    const { sut } = makeSut()
+    const signup = sut.getByTestId('signup')
+    fireEvent.click(signup)
+    // Terá duas rotas na pilha:
+    // 1 => será a rota que estou que é: /
+    // 2 => a rota que cliquei (no <Link ...>) que é: /signup
+    expect(history.length).toBe(2)
+    // Testo qual rota estou sendo redirecionado, que é /signup
+    expect(history.location.pathname).toBe('/signup')
   })
 })
