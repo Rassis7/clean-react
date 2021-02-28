@@ -7,6 +7,7 @@ export class EmailValidation implements FieldValidation {
   }
 
   validate (value: string): Error {
-    return new InvalidFieldError(this.field)
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailRegex.test(value) ? null : new InvalidFieldError(this.field)
   }
 }
