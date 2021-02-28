@@ -48,6 +48,7 @@
     "husky": "^5.0.9",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.5.0",
+    "jest-localstorage-mock": "^2.4.7",
     "lint-staged": "^10.5.4",
     "node-sass": "^5.0.0",
     "sass-loader": "^11.0.1",
