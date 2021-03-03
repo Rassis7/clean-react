@@ -1,6 +1,5 @@
 import { MinLengthValidation } from './min-length-validation';
 import { InvalidFieldError } from '@/validation/errors';
-import { FieldValidation } from '@/validation/protocols';
 
 describe('MinLengthValidation', () => {
   it('Should return error if value is invalid', () => {
