@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext } from 'react'
 import Styles from './input-styles.scss'
 import Context from '@/presentation/contexts/form-context'
 
@@ -14,7 +14,7 @@ const Input: React.FC<Props> = (props: Props) => {
     setState({ ...state, [target.name]: target.value })
   }
   const getStatus = (): string => error ? '🔴' : '🟢'
-  const getTitle = (): string => error || 'Tudo certo!';
+  const getTitle = (): string => error || 'Tudo certo!'
 
   return (
     <div className={Styles.inputWrap}>
@@ -24,4 +24,4 @@ const Input: React.FC<Props> = (props: Props) => {
   )
 }
 
-export default Input;
+export default Input

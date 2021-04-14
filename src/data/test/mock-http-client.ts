@@ -1,4 +1,4 @@
-import { HttpResponse, HttpStatusCode, HttpPostClient, HttpPostParams } from '@/data/protocols/http';
+import { HttpResponse, HttpStatusCode, HttpPostClient, HttpPostParams } from '@/data/protocols/http'
 
 export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
   url?: string
@@ -10,6 +10,6 @@ export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
   async post ({ url, body }: HttpPostParams<T>): Promise<HttpResponse<R>> {
     this.url = url
     this.body = body
-    return Promise.resolve(this.response)
+    return this.response
   }
 }
