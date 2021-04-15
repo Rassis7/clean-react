@@ -11,12 +11,6 @@
       "npm run test:staged"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test:ci"
-    }
-  },
   "scripts": {
     "start": "webpack serve --open",
     "test": "jest --passWithNoTests --no-cache --runInBand",
@@ -24,7 +18,8 @@
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test -- --coverage",
     "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
-    "check": "npm-check -u -s"
+    "check": "npm-check -u -s",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@testing-library/react": "11.2.6",
