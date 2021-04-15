@@ -21,4 +21,12 @@ describe('LocalSaveAccessToken', () => {
     expect(setStorageMock.key).toBe('accessToken')
     expect(setStorageMock.value).toBe(accessToken)
   })
+  it('Should throw if SetStorage throws', async () => {
+    const { setStorageMock, sut } = makeSut()
+    jest.spyOn(setStorageMock, 'set').mockRejectedValueOnce(new Error())
+    // N quero a promise resolvida, por isso faço sem await
+    const promise = sut.save(faker.datatype.uuid())
+    // aqui já quero o throw, por isso uso o await
+    await expect(promise).rejects.toThrow(new Error())
+  })
 })
