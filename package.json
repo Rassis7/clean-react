@@ -23,6 +23,7 @@
     "test:watch": "yarn test -- --watch",
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test -- --coverage",
+    "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
     "check": "npm-check -u -s"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "4.22.0",
     "clean-webpack-plugin": "^3.0.0",
+    "coveralls": "^3.1.0",
     "css-loader": "5.2.1",
     "dotenv-webpack": "^7.0.2",
     "eslint": "7.24.0",
