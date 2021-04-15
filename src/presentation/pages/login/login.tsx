@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import Styles from './login-styles.scss'
-import { FormStatus, Footer, Input, LoginHeader } from '@/presentation/components';
+import { FormStatus, Footer, Input, LoginHeader } from '@/presentation/components'
 import Context from '@/presentation/contexts/form-context'
-import { Validation } from '@/presentation/protocols/validation';
-import { Authentication } from '@/domain/usecases';
+import { Validation } from '@/presentation/protocols/validation'
+import { Authentication } from '@/domain/usecases'
 
 type Props = {
   validation: Validation
@@ -23,7 +23,7 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
   })
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       if (state.isLoading || state.emailError || state.passwordError) return
       setState(s => ({ ...s, isLoading: true }))

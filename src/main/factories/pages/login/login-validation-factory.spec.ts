@@ -1,6 +1,6 @@
-import { ValidationComposite } from '@/validation/validators';
-import { ValidationBuilder } from '@/validation/validators/buider/validation-builder';
-import { makeLoginValidation } from './login-validation-factory';
+import { ValidationComposite } from '@/validation/validators'
+import { ValidationBuilder } from '@/validation/validators/buider/validation-builder'
+import { makeLoginValidation } from './login-validation-factory'
 
 describe('LoginValidationFactory', () => {
   it('Should make ValidationComposite with correct validations', () => {
@@ -9,5 +9,5 @@ describe('LoginValidationFactory', () => {
       ...ValidationBuilder.field('email').email().required().build(),
       ...ValidationBuilder.field('password').min(5).required().build()
     ]))
-  });
-});
+  })
+})

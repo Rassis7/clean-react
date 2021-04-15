@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import Spinner from '@/presentation/components/spinner/spinner';
-import Context from '@/presentation/contexts/form-context';
+import React, { useContext } from 'react'
+import Spinner from '@/presentation/components/spinner/spinner'
+import Context from '@/presentation/contexts/form-context'
 import Styles from './form-status-styles.scss'
 
 const FormStatus: React.FC = () => {
@@ -13,4 +13,4 @@ const FormStatus: React.FC = () => {
   )
 }
 
-export default FormStatus;
+export default FormStatus
