@@ -200,6 +200,18 @@ describe('Login Component', () => {
     testErrorWrapChildCount(sut, 1)
   })
 
+  test('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new InvalidCredentialError()
+    // Devo mockar o retorno do authenticationSpy, por default ele trás o mockAccountModel, agora será um erro.
+    jest.spyOn(saveAccessTokenMock, 'save').mockReturnValueOnce(Promise.reject(error))
+    await simulateValidSubmit(sut)
+    testElementText(sut, 'main-error', error.message)
+    // Se eu testar o spinner diretamente, quando ele sumir, vai quebrar, por isso...
+    // Aqui ele só terá 1 filho, pq o spinner irá sumir.
+    testErrorWrapChildCount(sut, 1)
+  })
+
   test('Should call SaveAccessToken on success', async () => {
     const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
     await simulateValidSubmit(sut)
